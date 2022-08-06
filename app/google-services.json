@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "984738224097",
+    "project_id": "rapport-77c69",
+    "storage_bucket": "rapport-77c69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984738224097:android:cf3a6086d94accff11e4a0",
+        "android_client_info": {
+          "package_name": "com.czech.rapport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984738224097-64psdqb72utqcgdm60sn3nbeloqkbgk6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.czech.rapport",
+            "certificate_hash": "aed36cf09b01bc6155790982d0173e465cee136e"
+          }
+        },
+        {
+          "client_id": "984738224097-1d1047i2d5svm1iepllh5t6q67embpa3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCViInDnRB2q9O2-n1BpYfpfACs1-vvD-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984738224097-1d1047i2d5svm1iepllh5t6q67embpa3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
