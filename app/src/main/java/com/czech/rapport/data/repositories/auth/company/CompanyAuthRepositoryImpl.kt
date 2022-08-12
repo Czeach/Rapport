@@ -29,7 +29,7 @@ class CompanyAuthRepositoryImpl @Inject constructor(
                     when (task.isSuccessful) {
                         true -> {
                             flow {
-                                emit(DataState.data(data = "Authentication successful"))
+                                emit(DataState.data(data = "Company authentication successful"))
 
                                 val companyInfo = CompanyInfo(
                                     id = firebaseAuth.currentUser?.uid,
@@ -49,19 +49,19 @@ class CompanyAuthRepositoryImpl @Inject constructor(
                                     .set(companyInfo)
                                     .addOnSuccessListener {
                                         flow {
-                                            emit(DataState.data(data = "Successfully created employee"))
+                                            emit(DataState.data(data = "Successfully created company account"))
                                         }.flowOn(Dispatchers.IO)
                                     }
                                     .addOnFailureListener {
                                         flow<DataState<String>> {
-                                            emit(DataState.error(message = "Employee creation failed"))
+                                            emit(DataState.error(message = "Company account creation failed"))
                                         }.flowOn(Dispatchers.IO)
                                     }
                             }.flowOn(Dispatchers.IO)
                         }
                         false -> {
                             flow<DataState<String>> {
-                                emit(DataState.error(message = "Authentication failed"))
+                                emit(DataState.error(message = "Company authentication failed"))
                             }.flowOn(Dispatchers.IO)
                         }
                     }
