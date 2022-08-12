@@ -1,7 +1,7 @@
 package com.czech.rapport.data.models
 
 data class CompanyInfo(
-    val id: Int?,
+    val id: String?,
     val companyName: String?,
     val companyEmail: String?,
     val industryType: String?,
@@ -9,5 +9,6 @@ data class CompanyInfo(
     val headquarterAddress: String?,
     val nameOfRegistrar: String?,
     val positionOfRegistrar: String?,
-    val companyDescription: String?
+    val companyDescription: String?,
+    val companyPassword: String?
 )
