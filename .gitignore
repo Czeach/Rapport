@@ -3,6 +3,7 @@
 /local.properties
 /.idea/
 /.idea/misc.xml
+.idea/misc.xml
 /.idea/gradle.xml
 /.idea/caches
 /.idea/libraries
@@ -16,3 +17,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/google-services.json
