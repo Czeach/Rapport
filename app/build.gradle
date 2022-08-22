@@ -78,4 +78,7 @@ dependencies {
     // Dagger-hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // Material UI
+    implementation 'com.google.android.material:material:1.6.1'
 }
