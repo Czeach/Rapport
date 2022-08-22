@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Rapport" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- TODO: tweak colors to make this work for night mode -->
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_dark_blue</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>

@@ -16,6 +16,7 @@
 
     <style name="EditTextThemeOverlay" parent="ThemeOverlay.AppCompat">
         <item name="colorControlActivated">@color/primary_dark_blue</item>
+        <item name="boxStrokeColor">@color/primary_dark_blue</item>
     </style>
 
 </resources>
