@@ -12,4 +12,13 @@
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
     <string name="employee">Employee</string>
+    <string name="company">Company</string>
+    <string name="company_name">Company name</string>
+    <string name="industry_type">Industry type</string>
+    <string name="company_size">Company size</string>
+    <string name="company_website">Company website</string>
+    <string name="company_headquarters_address">Company headquarters address</string>
+    <string name="brief_description_of_company">Brief description of company</string>
+    <string name="your_full_name">Your full name</string>
+    <string name="your_role_at_company">Your role at company</string>
 </resources>
