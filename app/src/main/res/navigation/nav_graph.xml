@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/employeeSignUpFragment">
+    app:startDestination="@id/companySignUpFragment">
     <fragment
         android:id="@+id/companySignUpFragment"
         android:name="com.czech.rapport.ui.signUp.company.CompanySignUpFragment"
-        android:label="company_sign_up_fragment"
+        android:label="Sign Up"
         tools:layout="@layout/company_sign_up_fragment" />
     <fragment
         android:id="@+id/employeeSignUpFragment"
         android:name="com.czech.rapport.ui.signUp.employee.EmployeeSignUpFragment"
-        android:label="Sign Up" />
+        android:label="Sign Up"
+        tools:layout="@layout/employee_sign_up_fragment"/>
 </navigation>
