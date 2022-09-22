@@ -25,6 +25,8 @@ class CompanyAuthRepositoryImpl @Inject constructor(
         return flow<DataState<String>> {
             emit(DataState.loading())
 
+            val companyExists = MutableStateFlow<Boolean?>(false)
+
             val companyInfo = CompanyInfo(
                 id = firebaseAuth.currentUser?.uid,
                 companyName = company.companyName,
@@ -39,17 +41,36 @@ class CompanyAuthRepositoryImpl @Inject constructor(
             )
 
             try {
-                firebaseAuth.createUserWithEmailAndPassword(
-                    company.companyEmail,
-                    company.companyPassword
-                ).await()
-
                 firebaseFirestore.collection(COMPANIES)
                     .document(company.companyName)
-                    .set(companyInfo, SetOptions.merge())
-                    .await()
+                    .get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val doc = it.result
+                            if (doc != null) {
+                                if (doc.exists()) {
+                                    companyExists.value = true
+                                }
+                            }
+                        }
+                    }
 
-                emit(DataState.data(data = "Company authentication and creation successful"))
+                if (companyExists.value == false) {
+                    firebaseAuth.createUserWithEmailAndPassword(
+                        company.companyEmail,
+                        company.companyPassword
+                    ).await()
+
+                    firebaseFirestore.collection(COMPANIES)
+                        .document(company.companyName)
+                        .set(companyInfo, SetOptions.merge())
+                        .await()
+
+                    emit(DataState.data(data = "Company authentication and creation successful"))
+
+                } else {
+                    emit(DataState.error(message = "Company already exists"))
+                }
 
             }catch (e: Throwable) {
                 emit(DataState.error(message = e.message.toString()))
