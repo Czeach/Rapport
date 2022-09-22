@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.czech.rapport.data.models.CompanyInfo
 import com.czech.rapport.databinding.CompanySignUpFragmentBinding
 
 class CompanySignUpFragment : Fragment() {
@@ -24,5 +25,18 @@ class CompanySignUpFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.signUpButton.setOnClickListener {
+
+            val companyInfo = CompanyInfo(
+                companyName = binding.companyNameText.text.toString(),
+                companyEmail = binding.companyEmailText.text.toString(),
+                companyPassword = binding.createPasswordText.toString()
+            )
+
+            viewModel.createCompany(companyInfo)
+        }
+    }
 
 }

@@ -14,6 +14,7 @@
     <string name="employee">Employee</string>
     <string name="company">Company</string>
     <string name="company_name">Company name</string>
+    <string name="company_email">Company email</string>
     <string name="industry_type">Industry type</string>
     <string name="company_size">Company size</string>
     <string name="company_website">Company website</string>

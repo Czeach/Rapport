@@ -1,6 +1,6 @@
 package com.czech.rapport.utils
 
 object Constants {
-    const val COMPANIES = "Companies"
-    const val EMPLOYEES = "Employees"
+    const val COMPANIES = "COMPANIES"
+    const val EMPLOYEES = "EMPLOYEES"
 }
