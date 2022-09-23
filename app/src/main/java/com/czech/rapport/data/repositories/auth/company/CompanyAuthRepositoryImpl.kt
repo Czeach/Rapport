@@ -6,7 +6,10 @@ import com.czech.rapport.utils.Constants.COMPANIES
 import com.czech.rapport.utils.states.DataState
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -19,13 +22,11 @@ class CompanyAuthRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore
 ) : CompanyAuthRepository {
 
-
+    private val companyExists = MutableStateFlow<Boolean?>(false)
 
     override suspend fun createCompany(company: CompanyInfo): Flow<DataState<String>> {
         return flow<DataState<String>> {
             emit(DataState.loading())
-
-            val companyExists = MutableStateFlow<Boolean?>(false)
 
             val companyInfo = CompanyInfo(
                 id = firebaseAuth.currentUser?.uid,
@@ -72,7 +73,9 @@ class CompanyAuthRepositoryImpl @Inject constructor(
                     emit(DataState.error(message = "Company already exists"))
                 }
 
-            }catch (e: Throwable) {
+            } catch (e: Throwable) {
+                emit(DataState.error(message = e.message.toString()))
+            } catch (e: FirebaseException) {
                 emit(DataState.error(message = e.message.toString()))
             }
         }.flowOn(Dispatchers.IO)
