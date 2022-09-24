@@ -4,11 +4,11 @@ data class CompanyInfo(
     val id: String? = null,
     val companyName: String,
     val companyEmail: String,
-    val industryType: String? = null,
-    val companySize: String? = null,
-    val headquarterAddress: String? = null,
-    val nameOfRegistrar: String? = null,
-    val positionOfRegistrar: String? = null,
-    val companyDescription: String? = null,
+    val industryType: String,
+    val companySize: String,
+    val headquarterAddress: String,
+    val nameOfRegistrar: String,
+    val positionOfRegistrar: String,
+    val companyDescription: String,
     val companyPassword: String
 )
