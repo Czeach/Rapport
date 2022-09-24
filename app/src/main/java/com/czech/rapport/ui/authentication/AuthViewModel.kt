@@ -1,4 +1,4 @@
-package com.czech.rapport.ui.signUp.company
+package com.czech.rapport.ui.authentication
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,13 +11,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CompanySignUpViewModel @Inject constructor(
+class AuthViewModel @Inject constructor(
     private val companyAuthRepository: CompanyAuthRepository
 ) : ViewModel() {
 
     val companySignUpState = MutableStateFlow<CompanySignUpState?>(null)
 
-    fun createCompany(company: CompanyInfo) {
+    fun companySignUp(company: CompanyInfo) {
         viewModelScope.launch {
             companyAuthRepository.createCompany(company).collect {
                 when {

@@ -1,23 +1,30 @@
-package com.czech.rapport.ui.signUp.company
+package com.czech.rapport.ui.authentication
 
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.czech.rapport.R
 import com.czech.rapport.data.models.CompanyInfo
 import com.czech.rapport.databinding.CompanySignUpFragmentBinding
-import com.czech.rapport.utils.hideKeyboard
+import com.czech.rapport.utils.*
+import com.czech.rapport.utils.states.CompanySignUpState
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
+import com.czech.rapport.utils.Constants.PASSWORD_LIMIT
+import java.util.regex.Pattern
 
 class CompanySignUpFragment : Fragment() {
 
     private var _binding: CompanySignUpFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by activityViewModels<CompanySignUpViewModel>()
+    private val viewModel by activityViewModels<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +53,29 @@ class CompanySignUpFragment : Fragment() {
                     companyPassword = binding.createPasswordText.text.toString()
                 )
 
-                viewModel.createCompany(companyInfo)
+                viewModel.companySignUp(companyInfo)
+            }
+        }
+        observe()
+    }
+
+    private fun observe() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.companySignUpState.collect {
+                when (it) {
+                    is CompanySignUpState.Loading -> {
+                        showProgress(true)
+                    }
+                    is CompanySignUpState.Error -> {
+                        showProgress(false)
+                        requireActivity().showShortToast(it.message)
+                    }
+                    is CompanySignUpState.Success -> {
+                        showProgress(false)
+                        requireActivity().showShortToast(it.data.toString())
+                    }
+                    else -> {}
+                }
             }
         }
     }
@@ -59,10 +88,6 @@ class CompanySignUpFragment : Fragment() {
             }
             binding.companyEmailText.text?.isEmpty() == true -> {
                 binding.companyEmail.error = getString(R.string.field_cannot_be_empty)
-                false
-            }
-            !Patterns.EMAIL_ADDRESS.matcher(binding.companyNameText.text).matches() -> {
-                binding.companyEmail.error = getString(R.string.enter_valid_email_address)
                 false
             }
             binding.industryTypeText.text?.isEmpty() == true -> {
@@ -98,20 +123,33 @@ class CompanySignUpFragment : Fragment() {
                 false
             }
             binding.confirmPasswordText.text?.isEmpty() == true -> {
-                binding.confirmPassword.error = getString(R.string.field_cannot_be_empty)
+                binding.confirmPassword.error = getString(R.string.password_must_match)
                 false
             }
-            binding.createPasswordText.text?.length!! < 8 ->{
+            binding.createPasswordText.text?.toString()?.length!! < PASSWORD_LIMIT ->{
                 binding.createPassword.error = getString(R.string.password_must_be_at_least_8_characters)
                 false
             }
-            binding.createPasswordText.text != binding.confirmPasswordText.text -> {
+            binding.createPasswordText.text.toString() != binding.confirmPasswordText.text.toString() -> {
                 binding.confirmPassword.error = getString(R.string.password_must_match)
                 false
             }
             else -> true
         }
-
     }
 
+    private fun showProgress(show: Boolean) {
+        binding.signUpButton.apply {
+            if (show) {
+                disableView()
+                showProgress {
+                    buttonText = ""
+                    progressColor = ContextCompat.getColor(requireContext(), R.color.white)
+                }
+            } else {
+                enableView()
+                hideProgress("Sign up")
+            }
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.czech.rapport.ui.signUp.employee
+package com.czech.rapport.ui.authentication
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ class EmployeeSignUpFragment : Fragment() {
     private var _binding: EmployeeSignUpFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by activityViewModels<EmployeeSignUpViewModel>()
+    private val viewModel by activityViewModels<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

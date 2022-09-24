@@ -6,12 +6,12 @@
     app:startDestination="@id/companySignUpFragment">
     <fragment
         android:id="@+id/companySignUpFragment"
-        android:name="com.czech.rapport.ui.signUp.company.CompanySignUpFragment"
+        android:name="com.czech.rapport.ui.authentication.CompanySignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/company_sign_up_fragment" />
     <fragment
         android:id="@+id/employeeSignUpFragment"
-        android:name="com.czech.rapport.ui.signUp.employee.EmployeeSignUpFragment"
+        android:name="com.czech.rapport.ui.authentication.EmployeeSignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/employee_sign_up_fragment"/>
 </navigation>

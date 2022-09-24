@@ -13,6 +13,22 @@ fun View.show() {
     this.visibility = View.VISIBLE
 }
 
+fun View.disableView() {
+    animate()
+        .alpha(0.5f).duration = 300
+    isClickable = false
+    isEnabled = false
+    isFocusable = false
+}
+
+fun View.enableView() {
+    animate()
+        .alpha(1f).duration = 300
+    isClickable = true
+    isFocusable = true
+    isEnabled = true
+}
+
 fun Activity.showShortToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

@@ -16,7 +16,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.signUp.employee.EmployeeSignUpFragment">
+            tools:context=".ui.authentication.EmployeeSignUpFragment">
 
             <TextView
                 android:id="@+id/employee_label"

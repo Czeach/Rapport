@@ -23,6 +23,7 @@
     <string name="your_full_name">Your full name</string>
     <string name="your_role_at_company">Your position at company</string>
     <string name="field_cannot_be_empty">Field cannot be empty</string>
+    <string name="no_special_characters">Field cannot contain special characters</string>
     <string name="enter_valid_email_address">Please enter a valid email address</string>
     <string name="password_must_match">Passwords must match</string>
     <string name="password_must_be_at_least_8_characters">Password must be at least 8 characters</string>
