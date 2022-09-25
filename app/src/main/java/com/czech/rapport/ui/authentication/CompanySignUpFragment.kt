@@ -1,7 +1,6 @@
 package com.czech.rapport.ui.authentication
 
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.czech.rapport.utils.states.CompanySignUpState
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import com.czech.rapport.utils.Constants.PASSWORD_LIMIT
-import java.util.regex.Pattern
 
 class CompanySignUpFragment : Fragment() {
 

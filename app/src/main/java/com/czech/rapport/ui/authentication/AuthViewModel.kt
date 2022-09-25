@@ -42,7 +42,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun createEmployee(employee: EmployeeInfo) {
+    fun employeeSignUp(employee: EmployeeInfo) {
         viewModelScope.launch {
             employeeAuthRepository.createEmployee(employee).collect {
                 when {
