@@ -6,10 +6,13 @@ import com.czech.rapport.utils.states.DataState
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class CompanyAuthRepositoryImpl @Inject constructor(
@@ -17,59 +20,61 @@ class CompanyAuthRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore
 ) : CompanyAuthRepository {
 
+    private val companyExists = MutableStateFlow<Boolean?>(false)
+
     override suspend fun createCompany(company: CompanyInfo): Flow<DataState<String>> {
         return flow<DataState<String>> {
             emit(DataState.loading())
 
-            firebaseAuth.createUserWithEmailAndPassword(
-                company.companyEmail.toString(),
-                company.companyPassword.toString()
-            ).addOnCompleteListener { task ->
-                try {
-                    when (task.isSuccessful) {
-                        true -> {
-                            flow {
-                                emit(DataState.data(data = "Company authentication successful"))
+            val companyInfo = CompanyInfo(
+                id = firebaseAuth.currentUser?.uid,
+                companyName = company.companyName,
+                companyEmail = company.companyEmail,
+                industryType = company.industryType,
+                companySize = company.companySize,
+                headquarterAddress = company.headquarterAddress,
+                nameOfRegistrar = company.nameOfRegistrar,
+                positionOfRegistrar = company.positionOfRegistrar,
+                companyDescription = company.companyDescription,
+                companyPassword = company.companyPassword
+            )
 
-                                val companyInfo = CompanyInfo(
-                                    id = firebaseAuth.currentUser?.uid,
-                                    companyName = company.companyName,
-                                    companyEmail = company.companyEmail,
-                                    industryType = company.industryType,
-                                    companySize = company.companySize,
-                                    headquarterAddress = company.headquarterAddress,
-                                    nameOfRegistrar = company.nameOfRegistrar,
-                                    positionOfRegistrar = company.positionOfRegistrar,
-                                    companyDescription = company.companyDescription,
-                                    companyPassword = company.companyPassword
-                                )
-
-                                firebaseFirestore.collection(COMPANIES)
-                                    .document(company.companyName!!)
-                                    .set(companyInfo)
-                                    .addOnSuccessListener {
-                                        flow {
-                                            emit(DataState.data(data = "Successfully created company account"))
-                                        }.flowOn(Dispatchers.IO)
-                                    }
-                                    .addOnFailureListener {
-                                        flow<DataState<String>> {
-                                            emit(DataState.error(message = "Company account creation failed"))
-                                        }.flowOn(Dispatchers.IO)
-                                    }
-                            }.flowOn(Dispatchers.IO)
-                        }
-                        false -> {
-                            flow<DataState<String>> {
-                                emit(DataState.error(message = "Company authentication failed"))
-                            }.flowOn(Dispatchers.IO)
+            try {
+                firebaseFirestore.collection(COMPANIES)
+                    .document(company.companyName)
+                    .get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val doc = it.result
+                            if (doc != null) {
+                                if (doc.exists()) {
+                                    companyExists.value = true
+                                }
+                            }
                         }
                     }
-                } catch (e: FirebaseException) {
-                   flow<DataState<String>> {
-                       emit(DataState.error(message = e.message.toString()))
-                   }.flowOn(Dispatchers.IO)
+
+                if (companyExists.value == false) {
+                    firebaseAuth.createUserWithEmailAndPassword(
+                        company.companyEmail,
+                        company.companyPassword
+                    ).await()
+
+                    firebaseFirestore.collection(COMPANIES)
+                        .document(company.companyName)
+                        .set(companyInfo, SetOptions.merge())
+                        .await()
+
+                    emit(DataState.data(data = "Company authentication and creation successful"))
+
+                } else {
+                    emit(DataState.error(message = "Company already exists"))
                 }
+
+            } catch (e: Throwable) {
+                emit(DataState.error(message = e.message.toString()))
+            } catch (e: FirebaseException) {
+                emit(DataState.error(message = e.message.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }
