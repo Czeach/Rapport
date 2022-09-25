@@ -7,10 +7,13 @@ import com.czech.rapport.utils.states.DataState
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class EmployeeAuthRepositoryImpl @Inject constructor(
@@ -18,60 +21,62 @@ class EmployeeAuthRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore
 ) : EmployeeAuthRepository{
 
+    private val employeeExists = MutableStateFlow<Boolean?>(false)
+
     override suspend fun createEmployee(employee: EmployeeInfo): Flow<DataState<String>> {
         return flow<DataState<String>> {
             emit(DataState.loading())
 
-            firebaseAuth.createUserWithEmailAndPassword(
-                employee.workEmail.toString(),
-                employee.password.toString()
-            ).addOnCompleteListener { task ->
-                try {
-                    when (task.isSuccessful) {
-                        true -> {
-                            flow {
-                                emit(DataState.data(data = "Company authentication successful"))
+            val employeeInfo = EmployeeInfo(
+                id = firebaseAuth.currentUser?.uid,
+                firstName = employee.firstName,
+                lastName = employee.lastName,
+                workEmail = employee.workEmail,
+                currentCompany = employee.currentCompany,
+                positionAtCompany = employee.positionAtCompany,
+                password = employee.password
+            )
 
-                                val employeeInfo = EmployeeInfo(
-                                    id = firebaseAuth.currentUser?.uid,
-                                    firstName = employee.firstName,
-                                    lastName = employee.lastName,
-                                    workEmail = employee.workEmail,
-                                    currentCompany = employee.currentCompany,
-                                    positionAtCompany = employee.positionAtCompany,
-                                    password = employee.password
-                                )
-
-                                firebaseFirestore.collection(COMPANIES)
-                                    .document(employee.currentCompany!!)
-                                    .collection(EMPLOYEES)
-                                    .document("${employee.firstName} ${employee.lastName}")
-                                    .set(employeeInfo)
-                                    .addOnSuccessListener {
-                                        flow {
-                                            emit(DataState.data(data = "Successfully created employee account"))
-                                        }.flowOn(Dispatchers.IO)
-                                    }
-                                    .addOnFailureListener {
-                                        flow<DataState<String>> {
-                                            emit(DataState.error(message = "Employee account creation failed"))
-                                        }.flowOn(Dispatchers.IO)
-                                    }
-                            }.flowOn(Dispatchers.IO)
-                        }
-                        false -> {
-                            flow<DataState<String>> {
-                                emit(DataState.error(message = "Employee authentication failed"))
-                            }.flowOn(Dispatchers.IO)
+            try {
+                firebaseFirestore.collection(COMPANIES)
+                    .document(employee.currentCompany)
+                    .collection(EMPLOYEES)
+                    .document(employee.firstName + " " + employee.lastName)
+                    .get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val doc = it.result
+                            if (doc != null) {
+                                if (doc.exists()) {
+                                    employeeExists.value = true
+                                }
+                            }
                         }
                     }
-                } catch (e: FirebaseException) {
-                    flow<DataState<String>> {
-                        emit(DataState.error(message = e.message.toString()))
-                    }.flowOn(Dispatchers.IO)
-                }
-            }
 
+                if (employeeExists.value == false) {
+                    firebaseAuth.createUserWithEmailAndPassword(
+                        employee.workEmail,
+                        employee.password
+                    ).await()
+
+                    firebaseFirestore.collection(COMPANIES)
+                        .document(employee.currentCompany)
+                        .collection(EMPLOYEES)
+                        .document(employee.firstName + " " + employee.lastName)
+                        .set(employeeInfo, SetOptions.merge())
+                        .await()
+
+                    emit(DataState.data(data = "Employee authentication and creation successful"))
+                } else {
+                    emit(DataState.error(message = "Employee already exists already exists"))
+                }
+
+            }catch (e: Throwable) {
+                emit(DataState.error(message = e.message.toString()))
+            } catch (e: FirebaseException) {
+                emit(DataState.error(message = e.message.toString()))
+            }
         }.flowOn(Dispatchers.IO)
     }
 }
