@@ -6,32 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.onboarding.OnboardingActivity">
 
-    <FrameLayout
-        android:id="@+id/fl_slider"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp2_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginHorizontal="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp2_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-
-    <!-- markers -->
     <LinearLayout
         android:id="@+id/marker_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="280dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:layout_marginVertical="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fl_slider">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/first_circle"
@@ -54,5 +43,96 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/unfilled_dot" />
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_button"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:backgroundTint="@color/primary_dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/previous_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Previous"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/primary_dark_blue" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/auth_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/sign_up_as_employee"
+            app:backgroundTint="@color/primary_dark_blue"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_company_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/create_company"
+            app:backgroundTint="@color/primary_dark_blue"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sign_up_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/login"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/create_company_button"
+            app:strokeColor="@color/primary_dark_blue" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

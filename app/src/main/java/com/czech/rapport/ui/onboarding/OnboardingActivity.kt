@@ -1,24 +1,19 @@
 package com.czech.rapport.ui.onboarding
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.czech.rapport.R
 import com.czech.rapport.databinding.ActivityOnboardingBinding
+import com.czech.rapport.utils.hide
+import com.czech.rapport.utils.show
+import dagger.hilt.android.AndroidEntryPoint
 
-private const val NUM_PAGES = 3
-
-class OnboardingActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class OnboardingActivity : FragmentActivity() {
 
     private lateinit var viewPager: ViewPager2
-    private var onBoardingPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            updateCircleMarker(binding, position)
-        }
-    }
 
     private lateinit var binding: ActivityOnboardingBinding
 
@@ -28,61 +23,83 @@ class OnboardingActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        viewPager = findViewById(R.id.vp2_pager)
+        viewPager = binding.vp2Pager
 
-        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        val pagerAdapter = OnboardingAdapter(this)
         viewPager.adapter = pagerAdapter
-        viewPager.registerOnPageChangeCallback(onBoardingPageChangeCallback)
-//        viewPager.setPageTransformer(ZoomOutPageTransformer())
+        viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            // triggered when there is any scrolling activity for the current page
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                updatePageViews(binding, position)
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
 
-    }
+            // triggered when you select a new page
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handleClicks(binding, position)
+            }
 
-    override fun onDestroy() {
-        binding.vp2Pager.unregisterOnPageChangeCallback(onBoardingPageChangeCallback)
-        super.onDestroy()
-    }
+        })
 
-    override fun onBackPressed() {
-        if (viewPager.currentItem == 0) {
-            super.onBackPressed()
-        } else {
-            viewPager.currentItem = viewPager.currentItem - 1
-        }
     }
 
     /**
-     * Update slider circle view based on fragment position
+     * Update views based on fragment position
      */
-    private fun updateCircleMarker(binding: ActivityOnboardingBinding, position: Int) {
+    private fun updatePageViews(binding: ActivityOnboardingBinding, position: Int) {
         when (position) {
             0 -> {
-                binding.firstCircle.setImageDrawable(getDrawable(R.drawable.filled_dot))
-                binding.secondCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
-                binding.thirdCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
+                binding.apply {
+                    firstCircle.setImageResource(R.drawable.filled_dot)
+                    secondCircle.setImageResource(R.drawable.unfilled_dot)
+                    thirdCircle.setImageResource(R.drawable.unfilled_dot)
+                    nextButton.show()
+                    previousButton.hide()
+                    authContainer.hide()
+                }
             }
             1 -> {
-                binding.secondCircle.setImageDrawable(getDrawable(R.drawable.filled_dot))
-                binding.firstCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
-                binding.thirdCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
+                binding.apply {
+                    secondCircle.setImageResource(R.drawable.filled_dot)
+                    firstCircle.setImageResource(R.drawable.unfilled_dot)
+                    thirdCircle.setImageResource(R.drawable.unfilled_dot)
+                    previousButton.show()
+                    nextButton.show()
+                    authContainer.hide()
+                }
             }
             2 -> {
-                binding.thirdCircle.setImageDrawable(getDrawable(R.drawable.filled_dot))
-                binding.secondCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
-                binding.firstCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
-            }
-            3 -> {
-                binding.thirdCircle.setImageDrawable(getDrawable(R.drawable.filled_dot))
-                binding.secondCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
-                binding.thirdCircle.setImageDrawable(getDrawable(R.drawable.unfilled_dot))
+                binding.apply {
+                    thirdCircle.setImageResource(R.drawable.filled_dot)
+                    secondCircle.setImageResource(R.drawable.unfilled_dot)
+                    firstCircle.setImageResource(R.drawable.unfilled_dot)
+                    authContainer.show()
+                    previousButton.hide()
+                    nextButton.hide()
+
+                }
+
             }
         }
     }
 
-
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = NUM_PAGES
-
-        override fun createFragment(position: Int): Fragment =
-            OnboardingFragment()
+    private fun handleClicks(binding: ActivityOnboardingBinding, position: Int) {
+        when (position) {
+            0 -> {
+                binding.nextButton.setOnClickListener { binding.vp2Pager.currentItem += 1 }
+            }
+            1 -> {
+                binding.previousButton.setOnClickListener { binding.vp2Pager.currentItem -= 1 }
+                binding.nextButton.setOnClickListener { binding.vp2Pager.currentItem += 1 }
+            }
+            2 -> {
+                //TODO: Handle navigation to main screens
+            }
+        }
     }
 }
