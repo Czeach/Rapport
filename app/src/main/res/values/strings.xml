@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Rapport</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_up">sign up</string>
     <string name="already_have_an_account_login">Already have an account? Login</string>
@@ -14,11 +13,24 @@
     <string name="employee">Employee</string>
     <string name="company">Company</string>
     <string name="company_name">Company name</string>
+    <string name="company_email">Company email</string>
     <string name="industry_type">Industry type</string>
     <string name="company_size">Company size</string>
     <string name="company_website">Company website</string>
     <string name="company_headquarters_address">Company headquarters address</string>
     <string name="brief_description_of_company">Brief description of company</string>
     <string name="your_full_name">Your full name</string>
-    <string name="your_role_at_company">Your role at company</string>
+    <string name="your_role_at_company">Your position at company</string>
+    <string name="field_cannot_be_empty">Field cannot be empty</string>
+    <string name="no_special_characters">Field cannot contain special characters</string>
+    <string name="enter_valid_email_address">Please enter a valid email address</string>
+    <string name="password_must_match">Passwords must match</string>
+    <string name="password_must_be_at_least_8_characters">Password must be at least 8 characters</string>
+    <string name="onboarding_text_one">Keep your staff up to date with training \n on proper conduct at work.</string>
+    <string name="onboarding_text_two">Offer your staff a safe and secure environment to report workplace incidents.</string>
+    <string name="onboarding_text_three">Put away the computer and utilise your phone for instant \n access to all the training you need on Rapport</string>
+    <string name="sign_up_as_employee">sign up as employee</string>
+    <string name="create_company">Create company</string>
+    <string name="login">login</string>
+
 </resources>
