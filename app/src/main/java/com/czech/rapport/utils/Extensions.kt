@@ -1,9 +1,15 @@
 package com.czech.rapport.utils
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 
 fun View.hide(onlyInvisible: Boolean = false) {
     this.visibility = if (onlyInvisible) View.INVISIBLE else View.GONE
@@ -27,6 +33,12 @@ fun View.enableView() {
     isClickable = true
     isFocusable = true
     isEnabled = true
+}
+
+fun Fragment.launchFragment(direction: NavDirections) = try {
+    findNavController().navigate(direction)
+} catch (e: Exception) {
+    Log.e("NAVIGATION_ERROR", e.toString())
 }
 
 fun Activity.showShortToast(message: String) {

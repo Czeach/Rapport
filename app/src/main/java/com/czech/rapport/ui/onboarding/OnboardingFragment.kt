@@ -51,6 +51,11 @@ class OnboardingFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun updatePageViews(binding: FragmentOnboardingBinding, position: Int) {
         when (position) {
             0 -> {
