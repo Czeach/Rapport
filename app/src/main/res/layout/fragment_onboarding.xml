@@ -1,36 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.onboarding.OnboardingFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp2_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/marker_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="280dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/onboarding_image"
+            android:id="@+id/first_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/unfilled_dot" />
+
+        <ImageView
+            android:id="@+id/second_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/unfilled_dot" />
+
+        <ImageView
+            android:id="@+id/third_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/unfilled_dot" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_button"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:backgroundTint="@color/primary_dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/previous_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Previous"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/primary_dark_blue" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/auth_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/sign_up_as_employee"
+            app:backgroundTint="@color/primary_dark_blue"
+            app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/onboarding_one" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/onboarding_text"
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_company_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:gravity="center"
-            android:lines="2"
-            app:layout_constraintEnd_toEndOf="@id/onboarding_image"
-            app:layout_constraintStart_toStartOf="@id/onboarding_image"
-            app:layout_constraintTop_toBottomOf="@id/onboarding_image"
-            tools:text="Keep your staff up to date with training \n on proper conduct at work." />
+            android:layout_marginTop="8dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/create_company"
+            app:backgroundTint="@color/primary_dark_blue"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sign_up_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/login"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/create_company_button"
+            app:strokeColor="@color/primary_dark_blue" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

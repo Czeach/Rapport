@@ -25,7 +25,7 @@ class OnboardingAdapter(private val context: Context) :
     // This method returns our layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.fragment_onboarding, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.onboarding_placeholder, parent, false)
         return ViewHolder(view)
     }
 
