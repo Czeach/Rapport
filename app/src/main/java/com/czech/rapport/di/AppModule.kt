@@ -1,7 +1,9 @@
 package com.czech.rapport.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.czech.rapport.BaseApplication
+import com.czech.rapport.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +19,12 @@ object AppModule {
         @ApplicationContext app: Context
     ): BaseApplication {
         return app as BaseApplication
+    }
+
+    @[Provides Singleton]
+    fun provideSharedPreferences(
+        @ApplicationContext context: Context
+    ): SharedPreferences {
+        return context.getSharedPreferences(R.string.app_name.toString() + "_prefs", Context.MODE_PRIVATE)
     }
 }

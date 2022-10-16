@@ -32,6 +32,16 @@ class SplashFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
     private fun delayAndObserve() {
         lifecycleScope.launch {
             delay(2000)

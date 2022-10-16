@@ -1,9 +1,11 @@
 package com.czech.rapport.ui.onboarding
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.czech.rapport.R
@@ -49,6 +51,11 @@ class OnboardingFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     override fun onDestroy() {
