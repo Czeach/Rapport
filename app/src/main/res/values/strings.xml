@@ -32,5 +32,17 @@
     <string name="sign_up_as_employee">sign up as employee</string>
     <string name="create_company">Create company</string>
     <string name="login">login</string>
+    <string name="new_here">New here?</string>
+    <string name="email_address">Email Address</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="title_activity_auth">AuthActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
+    <string name="employee_sign_up_uri">android-app://com.czech.rapport.ui.authentication/employeeSignUp</string>
+    <string name="create_company_uri">android-app://com.czech.rapport.ui.authentication/createCompany</string>
+    <string name="login_uri">android-app://com.czech.rapport.ui.authentication/login</string>
 </resources>

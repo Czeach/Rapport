@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface EmployeeAuthRepository {
 
-    suspend fun createEmployee(employee: EmployeeInfo): Flow<DataState<String>>
+    fun createEmployee(employee: EmployeeInfo): Flow<DataState<String>>
 }

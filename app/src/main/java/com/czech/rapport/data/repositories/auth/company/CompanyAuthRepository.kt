@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CompanyAuthRepository {
 
-    suspend fun createCompany(company: CompanyInfo): Flow<DataState<String>>
+    fun createCompany(company: CompanyInfo): Flow<DataState<String>>
 }
