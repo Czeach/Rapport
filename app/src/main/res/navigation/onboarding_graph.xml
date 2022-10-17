@@ -5,11 +5,16 @@
     android:id="@+id/onboarding_graph.xml"
     app:startDestination="@id/splashFragment">
 
+    <include app:graph="@navigation/auth_graph" />
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.czech.rapport.ui.onboarding.OnboardingFragment"
         android:label="fragment_onboarding"
-        tools:layout="@layout/fragment_onboarding" />
+        tools:layout="@layout/fragment_onboarding" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_authActivity"
+            app:destination="@id/authActivity" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.czech.rapport.ui.onboarding.SplashFragment"
@@ -18,5 +23,21 @@
         <action
             android:id="@+id/action_splashFragment_to_onboardingFragment"
             app:destination="@id/onboardingFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_authActivity"
+            app:destination="@id/authActivity" />
+        <action
+            android:id="@+id/action_splashFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
     </fragment>
+    <activity
+        android:id="@+id/authActivity"
+        android:name="com.czech.rapport.ui.authentication.AuthActivity"
+        android:label="auth_activity"
+        tools:layout="@layout/auth_activity" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.czech.rapport.ui.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

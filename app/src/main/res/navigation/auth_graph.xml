@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_graph.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.czech.rapport.ui.authentication.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_employeeSignUpFragment"
+            app:destination="@id/employeeSignUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_companySignUpFragment2"
+            app:destination="@id/companySignUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companySignUpFragment"
+        android:name="com.czech.rapport.ui.authentication.CompanySignUpFragment"
+        android:label="company_sign_up_fragment"
+        tools:layout="@layout/company_sign_up_fragment" >
+        <action
+            android:id="@+id/action_companySignUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeSignUpFragment"
+        android:name="com.czech.rapport.ui.authentication.EmployeeSignUpFragment"
+        android:label="EmployeeSignUpFragment"
+        tools:layout="@layout/employee_sign_up_fragment">
+        <action
+            android:id="@+id/action_employeeSignUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+</navigation>

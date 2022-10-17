@@ -1,12 +1,15 @@
 package com.czech.rapport.utils
 
 import android.app.Activity
+import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -37,6 +40,12 @@ fun View.enableView() {
 
 fun Fragment.launchFragment(direction: NavDirections) = try {
     findNavController().navigate(direction)
+} catch (e: Exception) {
+    Log.e("NAVIGATION_ERROR", e.toString())
+}
+
+fun Fragment.launchFragment(@IdRes destination: Int, args: Bundle? = null) = try {
+    findNavController().navigate(destination, args)
 } catch (e: Exception) {
     Log.e("NAVIGATION_ERROR", e.toString())
 }

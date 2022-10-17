@@ -12,6 +12,7 @@ import com.czech.rapport.R
 import com.czech.rapport.databinding.ActivityOnboardingBinding
 import com.czech.rapport.databinding.FragmentOnboardingBinding
 import com.czech.rapport.utils.hide
+import com.czech.rapport.utils.launchFragment
 import com.czech.rapport.utils.show
 
 class OnboardingFragment : Fragment() {
@@ -32,6 +33,7 @@ class OnboardingFragment : Fragment() {
         val pagerAdapter = OnboardingAdapter(requireContext())
         viewPager.adapter = pagerAdapter
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+
             // triggered when there is any scrolling activity for the current page
             override fun onPageScrolled(
                 position: Int,
@@ -49,6 +51,8 @@ class OnboardingFragment : Fragment() {
             }
 
         })
+
+
 
         return binding.root
     }
@@ -70,7 +74,6 @@ class OnboardingFragment : Fragment() {
                     firstCircle.setImageResource(R.drawable.filled_dot)
                     secondCircle.setImageResource(R.drawable.unfilled_dot)
                     thirdCircle.setImageResource(R.drawable.unfilled_dot)
-                    nextButton.show()
                     previousButton.hide()
                     authContainer.hide()
                 }
@@ -110,7 +113,21 @@ class OnboardingFragment : Fragment() {
                 binding.nextButton.setOnClickListener { binding.vp2Pager.currentItem += 1 }
             }
             2 -> {
-                //TODO: Handle navigation to main screens
+               navigateToPages()
+            }
+        }
+    }
+
+    private fun navigateToPages() {
+        binding.apply {
+            createCompanyButton.setOnClickListener {
+                launchFragment(R.id.companySignUpFragment)
+            }
+            signUpButton.setOnClickListener {
+                launchFragment(R.id.employeeSignUpFragment)
+            }
+            loginButton.setOnClickListener {
+                launchFragment(R.id.authActivity)
             }
         }
     }

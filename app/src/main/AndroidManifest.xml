@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rapport">
         <activity
+            android:name=".ui.authentication.AuthActivity"
+            android:exported="false"
+            android:label="@string/title_activity_auth"
+            android:theme="@style/Theme.Rapport.NoActionBar" />
+        <activity
             android:name=".ui.MainActivity"
             android:exported="false" />
         <activity

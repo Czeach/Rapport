@@ -23,7 +23,7 @@ class EmployeeAuthRepositoryImpl @Inject constructor(
 
     private val employeeExists = MutableStateFlow<Boolean?>(false)
 
-    override suspend fun createEmployee(employee: EmployeeInfo): Flow<DataState<String>> {
+    override fun createEmployee(employee: EmployeeInfo): Flow<DataState<String>> {
         return flow<DataState<String>> {
             emit(DataState.loading())
 
@@ -41,7 +41,7 @@ class EmployeeAuthRepositoryImpl @Inject constructor(
                 firebaseFirestore.collection(COMPANIES)
                     .document(employee.currentCompany)
                     .collection(EMPLOYEES)
-                    .document(employee.firstName + " " + employee.lastName)
+                    .document(employee.workEmail)
                     .get()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
@@ -63,7 +63,7 @@ class EmployeeAuthRepositoryImpl @Inject constructor(
                     firebaseFirestore.collection(COMPANIES)
                         .document(employee.currentCompany)
                         .collection(EMPLOYEES)
-                        .document(employee.firstName + " " + employee.lastName)
+                        .document(employee.workEmail)
                         .set(employeeInfo, SetOptions.merge())
                         .await()
 

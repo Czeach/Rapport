@@ -21,8 +21,4 @@ class SplashScreenViewModel @Inject constructor(
         get() = sharedPreferences.getBoolean(IS_USER_LOGGED_IN, false)
         set(value) = sharedPreferences.edit().putBoolean(IS_USER_LOGGED_IN, value).apply()
 
-    var isUserLoggedOut: Boolean
-        get() = sharedPreferences.getBoolean(IS_USER_LOGGED_OUT, false)
-        set(value) = sharedPreferences.edit().putBoolean(IS_USER_LOGGED_OUT, value).apply()
-
 }

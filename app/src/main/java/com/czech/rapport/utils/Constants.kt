@@ -1,4 +1,4 @@
-package com.czech.rapport.utils
+ package com.czech.rapport.utils
 
 object Constants {
     const val COMPANIES = "COMPANIES"

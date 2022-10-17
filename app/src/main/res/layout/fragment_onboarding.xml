@@ -56,7 +56,6 @@
         android:textAllCaps="false"
         android:textSize="12sp"
         android:textStyle="italic"
-        android:visibility="gone"
         app:backgroundTint="@color/primary_dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

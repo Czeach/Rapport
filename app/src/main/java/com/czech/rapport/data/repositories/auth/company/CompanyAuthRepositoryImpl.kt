@@ -22,7 +22,7 @@ class CompanyAuthRepositoryImpl @Inject constructor(
 
     private val companyExists = MutableStateFlow<Boolean?>(false)
 
-    override suspend fun createCompany(company: CompanyInfo): Flow<DataState<String>> {
+    override fun createCompany(company: CompanyInfo): Flow<DataState<String>> {
         return flow<DataState<String>> {
             emit(DataState.loading())
 
@@ -41,7 +41,7 @@ class CompanyAuthRepositoryImpl @Inject constructor(
 
             try {
                 firebaseFirestore.collection(COMPANIES)
-                    .document(company.companyName)
+                    .document(company.companyEmail)
                     .get()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
@@ -61,7 +61,7 @@ class CompanyAuthRepositoryImpl @Inject constructor(
                     ).await()
 
                     firebaseFirestore.collection(COMPANIES)
-                        .document(company.companyName)
+                        .document(company.companyEmail)
                         .set(companyInfo, SetOptions.merge())
                         .await()
 

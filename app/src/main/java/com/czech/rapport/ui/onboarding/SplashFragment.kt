@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.czech.rapport.R
 import com.czech.rapport.databinding.SplashScreenFragmentBinding
 import com.czech.rapport.utils.launchFragment
 import kotlinx.coroutines.delay
@@ -50,7 +51,21 @@ class SplashFragment : Fragment() {
     }
 
     private fun goToNextScreen() {
-        launchFragment(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+        when {
+            checkOnboardingState().and(checkAuthState()) -> {
+                launchFragment(R.id.mainActivity)
+            }
+            checkOnboardingState() -> {
+                launchFragment(R.id.authActivity)
+            }
+            else -> {
+                launchFragment(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
+            }
+        }
     }
+
+    private fun checkOnboardingState() = viewModel.hasUserSeenOnboarding
+
+    private fun checkAuthState() = viewModel.isUserLoggedIn
 
 }
