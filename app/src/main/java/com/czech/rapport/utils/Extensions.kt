@@ -50,6 +50,12 @@ fun Fragment.launchFragment(@IdRes destination: Int, args: Bundle? = null) = try
     Log.e("NAVIGATION_ERROR", e.toString())
 }
 
+fun Fragment.launchFragment(uri: Uri) = try {
+    findNavController().navigate(uri)
+} catch (e: Exception) {
+    Log.e("NAVIGATION_ERROR", e.toString())
+}
+
 fun Activity.showShortToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

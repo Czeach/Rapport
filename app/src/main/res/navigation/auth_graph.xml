@@ -10,6 +10,7 @@
         android:name="com.czech.rapport.ui.authentication.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
+        <deepLink app:uri="@string/login_uri"/>
         <action
             android:id="@+id/action_loginFragment_to_employeeSignUpFragment"
             app:destination="@id/employeeSignUpFragment" />
@@ -22,6 +23,7 @@
         android:name="com.czech.rapport.ui.authentication.CompanySignUpFragment"
         android:label="company_sign_up_fragment"
         tools:layout="@layout/company_sign_up_fragment" >
+        <deepLink app:uri="@string/create_company_uri"/>
         <action
             android:id="@+id/action_companySignUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -31,6 +33,7 @@
         android:name="com.czech.rapport.ui.authentication.EmployeeSignUpFragment"
         android:label="EmployeeSignUpFragment"
         tools:layout="@layout/employee_sign_up_fragment">
+        <deepLink app:uri="@string/employee_sign_up_uri"/>
         <action
             android:id="@+id/action_employeeSignUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />

@@ -1,12 +1,14 @@
 package com.czech.rapport.ui.onboarding
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.czech.rapport.R
 import com.czech.rapport.databinding.ActivityOnboardingBinding
@@ -121,13 +123,16 @@ class OnboardingFragment : Fragment() {
     private fun navigateToPages() {
         binding.apply {
             createCompanyButton.setOnClickListener {
-                launchFragment(R.id.companySignUpFragment)
+                val uri = Uri.parse(getString(R.string.create_company_uri))
+                launchFragment(uri)
             }
             signUpButton.setOnClickListener {
-                launchFragment(R.id.employeeSignUpFragment)
+                val uri = Uri.parse(getString(R.string.employee_sign_up_uri))
+                launchFragment(uri)
             }
             loginButton.setOnClickListener {
-                launchFragment(R.id.authActivity)
+                val uri = Uri.parse(getString(R.string.login_uri))
+                launchFragment(uri)
             }
         }
     }

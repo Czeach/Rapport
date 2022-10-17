@@ -30,7 +30,6 @@
     <string name="onboarding_text_two">Offer your staff a safe and secure environment to report workplace incidents.</string>
     <string name="onboarding_text_three">Put away the computer and utilise your phone for instant \n access to all the training you need on Rapport</string>
     <string name="sign_up_as_employee">sign up as employee</string>
-    <string name="employee_sign_up">employee sign up</string>
     <string name="create_company">Create company</string>
     <string name="login">login</string>
     <string name="new_here">New here?</string>
@@ -43,4 +42,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="employee_sign_up_uri">android-app://com.czech.rapport.ui.authentication/employeeSignUp</string>
+    <string name="create_company_uri">android-app://com.czech.rapport.ui.authentication/createCompany</string>
+    <string name="login_uri">android-app://com.czech.rapport.ui.authentication/login</string>
 </resources>
